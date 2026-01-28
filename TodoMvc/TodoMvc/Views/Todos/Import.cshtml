@@ -1,0 +1,61 @@
+@{
+    ViewData["Title"] = "Import CSV";
+}
+
+<div class="container" style="max-width: 720px;">
+    <div class="d-flex justify-content-between align-items-center mt-4 mb-3">
+        <h2 class="m-0">Import tasks (CSV)</h2>
+        <a class="btn btn-outline-secondary" asp-action="Index">Back to list</a>
+    </div>
+
+    @if (TempData["Message"] != null)
+    {
+        <div class="alert alert-success">
+            @TempData["Message"]
+        </div>
+    }
+
+    @if (!ViewData.ModelState.IsValid)
+    {
+        <div class="alert alert-danger">
+            <strong>Import failed:</strong>
+            <ul class="mb-0">
+                @foreach (var entry in ViewData.ModelState)
+                {
+                    foreach (var error in entry.Value.Errors)
+                    {
+                        <li>@error.ErrorMessage</li>
+                    }
+                }
+            </ul>
+        </div>
+    }
+
+    <div class="card">
+        <div class="card-body">
+            <p class="text-muted mb-3">
+                Upload a CSV file with the columns:
+                <code>Title</code> (required) and <code>DueDate</code> (optional, format <code>yyyy-MM-dd</code>).
+            </p>
+
+            <form asp-action="Import" method="post" enctype="multipart/form-data">
+                @Html.AntiForgeryToken()
+
+                <div class="mb-3">
+                    <label class="form-label">CSV file</label>
+                    <input class="form-control" type="file" name="csvFile" accept=".csv" />
+                </div>
+
+                <button class="btn btn-primary" type="submit">Import</button>
+            </form>
+
+            <hr />
+
+            <p class="mb-2"><strong>Example CSV:</strong></p>
+            <pre class="mb-0"><code>Title,DueDate
+Finish MVC assignment,2026-01-25
+Push to GitHub,
+Revise HTTP concepts,2026-01-28</code></pre>
+        </div>
+    </div>
+</div>
