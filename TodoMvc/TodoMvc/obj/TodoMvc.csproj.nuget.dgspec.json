@@ -1,17 +1,17 @@
 {
   "format": 1,
   "restore": {
-    "/Users/aman./Library/Mobile Documents/com~apple~CloudDocs/School/Computer Science/25-26/ASP.NET/TodoMvc/TodoMvc/TodoMvc.csproj": {}
+    "/Users/aman./Library/Mobile Documents/com~apple~CloudDocs/School/Computer Science/25-26/Visual Studio/Github/todo-list-/TodoMvc/TodoMvc/TodoMvc.csproj": {}
   },
   "projects": {
-    "/Users/aman./Library/Mobile Documents/com~apple~CloudDocs/School/Computer Science/25-26/ASP.NET/TodoMvc/TodoMvc/TodoMvc.csproj": {
+    "/Users/aman./Library/Mobile Documents/com~apple~CloudDocs/School/Computer Science/25-26/Visual Studio/Github/todo-list-/TodoMvc/TodoMvc/TodoMvc.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "/Users/aman./Library/Mobile Documents/com~apple~CloudDocs/School/Computer Science/25-26/ASP.NET/TodoMvc/TodoMvc/TodoMvc.csproj",
+        "projectUniqueName": "/Users/aman./Library/Mobile Documents/com~apple~CloudDocs/School/Computer Science/25-26/Visual Studio/Github/todo-list-/TodoMvc/TodoMvc/TodoMvc.csproj",
         "projectName": "TodoMvc",
-        "projectPath": "/Users/aman./Library/Mobile Documents/com~apple~CloudDocs/School/Computer Science/25-26/ASP.NET/TodoMvc/TodoMvc/TodoMvc.csproj",
+        "projectPath": "/Users/aman./Library/Mobile Documents/com~apple~CloudDocs/School/Computer Science/25-26/Visual Studio/Github/todo-list-/TodoMvc/TodoMvc/TodoMvc.csproj",
         "packagesPath": "/Users/aman./.nuget/packages/",
-        "outputPath": "/Users/aman./Library/Mobile Documents/com~apple~CloudDocs/School/Computer Science/25-26/ASP.NET/TodoMvc/TodoMvc/obj/",
+        "outputPath": "/Users/aman./Library/Mobile Documents/com~apple~CloudDocs/School/Computer Science/25-26/Visual Studio/Github/todo-list-/TodoMvc/TodoMvc/obj/",
         "projectStyle": "PackageReference",
         "configFilePaths": [
           "/Users/aman./.nuget/NuGet/NuGet.Config"
