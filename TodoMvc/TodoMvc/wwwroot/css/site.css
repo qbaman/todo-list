@@ -1,31 +1,69 @@
-html {
-  font-size: 14px;
-}
-
-@media (min-width: 768px) {
-  html {
-    font-size: 16px;
-  }
-}
-
-.btn:focus, .btn:active:focus, .btn-link.nav-link:focus, .form-control:focus, .form-check-input:focus {
-  box-shadow: 0 0 0 0.1rem white, 0 0 0 0.25rem #258cfb;
-}
-
-html {
-  position: relative;
-  min-height: 100%;
+/* Base */
+:root {
+  --card-radius: 16px;
 }
 
 body {
-  margin-bottom: 60px;
+  background: #f6f7fb;
 }
 
-.form-floating > .form-control-plaintext::placeholder, .form-floating > .form-control::placeholder {
-  color: var(--bs-secondary-color);
-  text-align: end;
+/* Container + typography */
+h1, .h3 {
+  letter-spacing: -0.02em;
 }
 
-.form-floating > .form-control-plaintext:focus::placeholder, .form-floating > .form-control:focus::placeholder {
-  text-align: start;
+/* Card polish */
+.card {
+  border-radius: var(--card-radius) !important;
+}
+
+.card.shadow-sm {
+  box-shadow: 0 10px 30px rgba(16, 24, 40, 0.08) !important;
+}
+
+/* Table polish */
+.table thead th {
+  font-weight: 600;
+  color: #111827;
+  border-bottom: 1px solid rgba(0,0,0,0.06);
+}
+
+.table tbody tr {
+  transition: transform 120ms ease, box-shadow 120ms ease, background-color 120ms ease;
+}
+
+.table tbody tr:hover {
+  background: rgba(59, 130, 246, 0.04);
+}
+
+/* Badges */
+.badge {
+  border-radius: 999px;
+  padding: 0.35rem 0.55rem;
+}
+
+/* Buttons */
+.btn {
+  border-radius: 12px;
+}
+
+.btn-success {
+  box-shadow: 0 6px 16px rgba(16, 185, 129, 0.18);
+}
+
+.btn-outline-danger:hover {
+  box-shadow: 0 6px 16px rgba(239, 68, 68, 0.18);
+}
+
+.btn-outline-primary:hover {
+  box-shadow: 0 6px 16px rgba(59, 130, 246, 0.18);
+}
+
+/* Inputs */
+.form-control {
+  border-radius: 12px;
+}
+
+.form-control:focus {
+  box-shadow: 0 0 0 0.25rem rgba(59, 130, 246, 0.12);
 }
