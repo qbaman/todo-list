@@ -2,6 +2,10 @@ using Microsoft.AspNetCore.Mvc;
 using TodoMvc.Data;
 using TodoMvc.Models;
 using TodoMvc.Services;
+using System.Text;
+using System.Globalization;
+using CsvHelper;
+using CsvHelper.Configuration;
 
 namespace TodoMvc.Controllers
 {
@@ -64,6 +68,37 @@ namespace TodoMvc.Controllers
             TodoStore.Delete(id);
             return RedirectToAction(nameof(Index));
         }
+
+        // GET: /Todos/Export
+        [HttpGet]
+        public IActionResult Export()
+        {
+            var items = TodoStore.GetAll();
+
+            using var memoryStream = new MemoryStream();
+
+            using (var writer = new StreamWriter(memoryStream))
+            using (var csv = new CsvWriter(writer, CultureInfo.InvariantCulture))
+            {
+                // Header
+                csv.WriteField("Title");
+                csv.WriteField("DueDate");
+                csv.WriteField("IsDone");
+                csv.NextRecord();
+
+                foreach (var item in items)
+                {
+                    csv.WriteField(item.Title);
+                    csv.WriteField(item.DueDate?.ToString("yyyy-MM-dd") ?? "");
+                    csv.WriteField(item.IsDone);
+                    csv.NextRecord();
+                }
+            }
+
+            var bytes = memoryStream.ToArray();
+            return File(bytes, "text/csv", "todo-tasks.csv");
+        }
+
 
         // GET: /Todos/Import
         public IActionResult Import()
