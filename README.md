@@ -69,18 +69,20 @@ This project is intentionally small, readable, and easy to extend.
 Title,DueDate
 Finish MVC practice,2026-02-01
 Revise HTTP GET vs POST,
-Title is required
-DueDate is optional (yyyy-MM-dd)
 ```
+Title is required
+
+
+Due Date is optional (yyyy-MM-dd)
 
 ---
 
 ## 🚀 Running the Project
 
-# Prerequisites
+### Prerequisites
 - .NET 9 SDK
 
-# Run locally
+### Run locally
 ```
 dotnet restore
 dotnet run
