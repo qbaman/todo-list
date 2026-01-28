@@ -1,91 +1,134 @@
-@model List<TodoMvc.Models.TodoItem>
+@model IEnumerable<TodoMvc.Models.TodoItem>
 
 @{
-    ViewData["Title"] = "To Do List";
+    ViewData["Title"] = "To-Do List";
 }
 
-<div class="container" style="max-width: 720px;">
-    <div class="d-flex justify-content-between align-items-center mt-4 mb-3">
-        <h2 class="m-0">To Do List</h2>
-        <a class="btn btn-primary" asp-action="Create">Add task</a>
-        <a class="btn btn-outline-primary" asp-action="Import">Import CSV</a>
-        <a class="btn btn-outline-success" asp-action="Export">Export CSV</a>
+<div class="container py-4" style="max-width: 900px;">
+    <div class="d-flex flex-column flex-md-row justify-content-between align-items-md-center gap-3 mb-3">
+        <div>
+            <h1 class="h3 mb-1">To-Do List</h1>
+        </div>
+
+        <div class="d-flex flex-wrap gap-2">
+            <a class="btn btn-primary" asp-action="Create">+ Add task</a>
+            <a class="btn btn-outline-secondary" asp-action="Import">Import CSV</a>
+            <a class="btn btn-outline-success" asp-action="Export">Export CSV</a>
+        </div>
     </div>
 
-    @if (!Model.Any())
+    @* TempData messages *@
+    @if (TempData["Success"] != null)
     {
-        <div class="alert alert-light text-center">
-            No tasks yet.
-        </div>
+        <div class="alert alert-success py-2">@TempData["Success"]</div>
     }
-    else
+    @if (TempData["Error"] != null)
     {
-        <div class="list-group">
-            @foreach (var item in Model)
-            {
-                <div class="list-group-item">
-                    <div class="d-flex justify-content-between align-items-start">
-                        <div class="me-3 flex-grow-1">
-                            <div class="fw-semibold @(item.IsDone ? "text-decoration-line-through text-muted" : "")">
-                                @item.Title
-                            </div>
-
-                            <div class="small text-muted mt-1">
-                                @if (item.DueDate.HasValue)
-                                {
-                                    <span class="badge bg-light text-dark">
-                                        Due @item.DueDate.Value.ToString("ddd MMM d yyyy")
-                                    </span>
-                                }
-                                else
-                                {
-                                    <span class="badge bg-light text-secondary">
-                                        No due date
-                                    </span>
-                                }
-                            </div>
-                        </div>
-
-                        <div class="d-flex flex-wrap gap-2 align-items-center">
-                            <!-- Toggle Done / Undo -->
-                            <form asp-action="Toggle" asp-route-id="@item.Id" method="post" class="m-0">
-                                @Html.AntiForgeryToken()
-                                <button type="submit"
-                                        class="btn btn-sm @(item.IsDone ? "btn-outline-secondary" : "btn-success")">
-                                    @(item.IsDone ? "Undo" : "Done")
-                                </button>
-                            </form>
-
-                            <!-- Set Due Date -->
-                            <form asp-action="SetDueDate" asp-route-id="@item.Id"
-                                  method="post"
-                                  class="m-0 d-flex align-items-center">
-                                @Html.AntiForgeryToken()
-                                <input type="date"
-                                       name="dueDate"
-                                       class="form-control form-control-sm me-2"
-                                       value="@(item.DueDate?.ToString("yyyy-MM-dd"))" />
-                                <button type="submit"
-                                        class="btn btn-sm btn-outline-primary">
-                                    Set
-                                </button>
-                            </form>
-
-                            <!-- Delete -->
-                            <form asp-action="Delete" asp-route-id="@item.Id"
-                                  method="post"
-                                  class="m-0"
-                                  onsubmit="return confirm('Delete this task?');">
-                                @Html.AntiForgeryToken()
-                                <button type="submit"
-                                        class="btn btn-sm btn-outline-danger">
-                                    Delete
-                                </button>
-                            </form>
-                        </div>
-                    </div>
-                </div>
-            }
-        </div>
+        <div class="alert alert-danger py-2">@TempData["Error"]</div>
     }
+
+    <div class="card shadow-sm border-0">
+        <div class="card-body p-0">
+            <div class="table-responsive">
+                <table class="table align-middle mb-0">
+                    <thead class="table-light">
+                        <tr>
+                            <th style="width: 60%;">Task</th>
+                            <th style="width: 20%;">Due</th>
+                            <th class="text-end" style="width: 20%;">Actions</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @if (Model == null || !Model.Any())
+                        {
+                            <tr>
+                                <td colspan="3" class="text-center text-muted py-5">
+                                    No tasks yet. Click <strong>+ Add task</strong> to create one.
+                                </td>
+                            </tr>
+                        }
+                        else
+                        {
+                            foreach (var item in Model)
+                            {
+                                var isOverdue = item.DueDate.HasValue && item.DueDate.Value.Date < DateTime.Today && !item.IsDone;
+
+                                <tr>
+                                    <td>
+                                        <div class="d-flex align-items-center gap-2">
+                                            <span class="badge @(item.IsDone ? "bg-success-subtle text-success" : "bg-secondary-subtle text-secondary")">
+                                                @(item.IsDone ? "Done" : "Open")
+                                            </span>
+
+                                            <div>
+                                                <div class="fw-semibold @(item.IsDone ? "text-decoration-line-through text-muted" : "")">
+                                                    @item.Title
+                                                </div>
+
+                                                @if (isOverdue)
+                                                {
+                                                    <div class="small text-danger">Overdue</div>
+                                                }
+                                            </div>
+                                        </div>
+                                    </td>
+
+                                    <td>
+                                        @if (item.DueDate.HasValue)
+                                        {
+                                            <span class="badge @(isOverdue ? "text-bg-danger" : "text-bg-light")">
+                                                @item.DueDate.Value.ToString("ddd dd MMM yyyy")
+                                            </span>
+                                        }
+                                        else
+                                        {
+                                            <span class="badge text-bg-light">No due date</span>
+                                        }
+                                    </td>
+
+                                    <td class="text-end">
+                                        <div class="d-inline-flex flex-wrap gap-2 justify-content-end">
+
+                                            @* Toggle done *@
+                                            <form asp-action="Toggle" method="post" class="d-inline">
+                                                @Html.AntiForgeryToken()
+                                                <input type="hidden" name="id" value="@item.Id" />
+                                                <button class="btn btn-sm @(item.IsDone ? "btn-outline-secondary" : "btn-success")" type="submit">
+                                                    @(item.IsDone ? "Undo" : "Done")
+                                                </button>
+                                            </form>
+
+                                            @* Set due date *@
+                                            <form asp-action="SetDueDate" method="post" class="d-inline">
+                                                @Html.AntiForgeryToken()
+                                                <input type="hidden" name="id" value="@item.Id" />
+                                                <input type="date" name="dueDate"
+                                                       value="@(item.DueDate?.ToString("yyyy-MM-dd"))"
+                                                       class="form-control form-control-sm d-inline-block"
+                                                       style="width: 160px;" />
+                                                <button class="btn btn-sm btn-outline-primary" type="submit">Save</button>
+                                            </form>
+
+                                            @* Delete *@
+                                            <form asp-action="Delete" method="post" class="d-inline"
+                                                  onsubmit="return confirm('Delete this task?');">
+                                                @Html.AntiForgeryToken()
+                                                <input type="hidden" name="id" value="@item.Id" />
+                                                <button class="btn btn-sm btn-outline-danger" type="submit">Delete</button>
+                                            </form>
+
+                                        </div>
+                                    </td>
+                                </tr>
+                            }
+                        }
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+
+    <div class="text-muted small mt-3">
+        Tip: Use <strong>Import CSV</strong> to bulk add tasks, or <strong>Export CSV</strong> to download your list.
+    </div>
 </div>
