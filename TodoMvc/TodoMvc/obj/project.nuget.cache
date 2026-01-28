@@ -1,8 +1,10 @@
 {
   "version": 2,
-  "dgSpecHash": "5ouhPTq/kZc=",
+  "dgSpecHash": "Taf+qsJFDrg=",
   "success": true,
   "projectFilePath": "/Users/aman./Library/Mobile Documents/com~apple~CloudDocs/School/Computer Science/25-26/Visual Studio/Github/todo-list-/TodoMvc/TodoMvc/TodoMvc.csproj",
-  "expectedPackageFiles": [],
+  "expectedPackageFiles": [
+    "/Users/aman./.nuget/packages/csvhelper/33.1.0/csvhelper.33.1.0.nupkg.sha512"
+  ],
   "logs": []
 }

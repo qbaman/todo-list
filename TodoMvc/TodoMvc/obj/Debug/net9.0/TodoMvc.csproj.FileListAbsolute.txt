@@ -95,3 +95,6 @@
 /Users/aman./Library/Mobile Documents/com~apple~CloudDocs/School/Computer Science/25-26/Visual Studio/Github/todo-list-/TodoMvc/TodoMvc/obj/Debug/net9.0/TodoMvc.pdb
 /Users/aman./Library/Mobile Documents/com~apple~CloudDocs/School/Computer Science/25-26/Visual Studio/Github/todo-list-/TodoMvc/TodoMvc/obj/Debug/net9.0/TodoMvc.genruntimeconfig.cache
 /Users/aman./Library/Mobile Documents/com~apple~CloudDocs/School/Computer Science/25-26/Visual Studio/Github/todo-list-/TodoMvc/TodoMvc/obj/Debug/net9.0/ref/TodoMvc.dll
+/Users/aman./Library/Mobile Documents/com~apple~CloudDocs/School/Computer Science/25-26/Visual Studio/Github/todo-list-/TodoMvc/TodoMvc/bin/Debug/net9.0/CsvHelper.dll
+/Users/aman./Library/Mobile Documents/com~apple~CloudDocs/School/Computer Science/25-26/Visual Studio/Github/todo-list-/TodoMvc/TodoMvc/obj/Debug/net9.0/TodoMvc.csproj.AssemblyReference.cache
+/Users/aman./Library/Mobile Documents/com~apple~CloudDocs/School/Computer Science/25-26/Visual Studio/Github/todo-list-/TodoMvc/TodoMvc/obj/Debug/net9.0/TodoMvc.csproj.Up2Date
