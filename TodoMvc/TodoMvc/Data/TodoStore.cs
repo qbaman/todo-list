@@ -1,35 +1,68 @@
+using System;
 using System.Collections.Generic;
+using System.Linq;
 using TodoMvc.Models;
 
 namespace TodoMvc.Data
 {
+    /// <summary>
+    /// Simple in-memory storage for tasks (no database).
+    /// Data resets when the app restarts.
+    /// </summary>
     public static class TodoStore
     {
-        public static List<TodoItem> Items { get; } = new()
-        {
-            new TodoItem { Id = 1, Title = "Finish MVC To-Do demo", IsDone = false },
-            new TodoItem { Id = 2, Title = "Push project to GitHub", IsDone = false }
-        };
+        private static readonly List<TodoItem> _items = new();
+        private static int _nextId = 1;
 
-        private static int _nextId = 3;
+        // Optional seed tasks (safe defaults)
+        static TodoStore()
+        {
+            Add(new TodoItem { Title = "Finish ASP.NET MVC To-Do demo" });
+            Add(new TodoItem { Title = "Push project to GitHub" });
+            Add(new TodoItem { Title = "Submit work to Mohi" });
+        }
+
+        public static IReadOnlyList<TodoItem> GetAll()
+        {
+            return _items
+                .OrderByDescending(t => t.CreatedAt)
+                .ToList();
+        }
+
+        public static TodoItem? GetById(int id)
+        {
+            return _items.FirstOrDefault(t => t.Id == id);
+        }
 
         public static void Add(TodoItem item)
         {
             item.Id = _nextId++;
-            Items.Add(item);
+            item.CreatedAt = DateTime.Now;
+            _items.Add(item);
         }
 
-        public static void Delete(int id)
+        public static void Toggle(int id)
         {
-            var item = Items.Find(x => x.Id == id);
-            if (item != null) Items.Remove(item);
+            var item = GetById(id);
+            if (item == null) return;
+
+            item.IsDone = !item.IsDone;
         }
 
         public static void SetDueDate(int id, DateTime? dueDate)
         {
-            var item = Items.Find(x => x.Id == id);
-            if (item != null)
-                item.DueDate = dueDate;
+            var item = GetById(id);
+            if (item == null) return;
+
+            item.DueDate = dueDate;
+        }
+
+        public static void Delete(int id)
+        {
+            var item = GetById(id);
+            if (item == null) return;
+
+            _items.Remove(item);
         }
     }
 }
